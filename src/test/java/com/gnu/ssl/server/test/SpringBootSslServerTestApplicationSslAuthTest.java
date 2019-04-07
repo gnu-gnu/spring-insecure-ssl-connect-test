@@ -6,8 +6,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
@@ -18,15 +16,10 @@ import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
-import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.KeyManagerFactory;
-import javax.net.ssl.ManagerFactoryParameters;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLException;
-import javax.net.ssl.SSLParameters;
-import javax.net.ssl.SSLPermission;
-import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
@@ -52,8 +45,6 @@ import io.netty.handler.ssl.ClientAuth;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
-import io.netty.handler.ssl.util.SimpleTrustManagerFactory;
-import io.netty.util.internal.ReflectionUtil;
 import reactor.netty.http.client.HttpClient;
 
 /**
@@ -79,7 +70,6 @@ public class SpringBootSslServerTestApplicationSslAuthTest {
 	
 	private static final String KEY_STORE_PASS = "client";
 	private static final String TRUST_STORE_PASS = "client";
-	private static HostnameVerifier defaultHostnameVerifier;
 	
 	/**
 	 * two-way 인증을 위한 Client측 인증 정보를 설정한다.
@@ -91,18 +81,6 @@ public class SpringBootSslServerTestApplicationSslAuthTest {
 		System.setProperty("javax.net.ssl.keyStorePassword", KEY_STORE_PASS);
 		System.setProperty("javax.net.ssl.trustStore", CLIENT_TRUST_STORE);
 		System.setProperty("javax.net.ssl.trustStorePassword", TRUST_STORE_PASS);
-		
-		SecurityManager sm = System.getSecurityManager();
-	        if (sm != null) {
-	            sm.checkPermission(new SSLPermission("setHostnameVerifier"));
-	        }
-	        defaultHostnameVerifier = new HostnameVerifier() {
-	    		@Override
-	    		public boolean verify(String hostname, SSLSession session) {
-	    			// TODO Auto-generated method stub
-	    			return true;
-	    		}
-	    	};;
 	}
 	
 	@Before
