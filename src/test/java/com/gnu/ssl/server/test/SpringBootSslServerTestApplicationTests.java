@@ -27,6 +27,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.http.client.reactive.ClientHttpConnector;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.client.ResourceAccessException;
@@ -39,12 +40,15 @@ import reactor.netty.http.client.HttpClient;
 /**
  * 
  * Self-signed 인증서가 설치된 환경에서 Spring4 까지 주로 사용하던 RestTemplate과 WebClient를 사용하는 방법을 테스트한다.
+ * one-way test 이므로 client 측에서는 insecure ssl을 무시하고 진행할 수 있다.
+ * 이 테스트는 classpath 에 존재하는 test.jks를 이용하여 테스트를 진행한다.
  * 
  * @author gnu-gnu(geunwoo.j.shim@gmail.com)
  *
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@ActiveProfiles(profiles="oneway")
 public class SpringBootSslServerTestApplicationTests {
 
 	@LocalServerPort
