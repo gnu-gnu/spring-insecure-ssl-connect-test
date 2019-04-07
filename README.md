@@ -9,3 +9,7 @@ Spring4 까지 주로 사용되던 RestTemplate과 Spring5 에서 사용하는 W
 /src/main/resources에 self-signed 인증서 샘플이 포함되어 있다. (ssl.jks)
 
 test 폴더의 SpringBootSslServerTestApplicationTests를 통해 기능 확인이 가능하다. (RestTemplate 실패, 성공 / WebClient 실패, 성공)
+
+SpringBootSslServerTestApplicationSslAuthTest 에서는 Client Authentication (two-way SSL) 테스트가 가능하다.
+
+ 단 two-way SSL 테스트시에는 주석의 안내와 같이 패키지의 client_auth_files를 적절한 곳으로 위치시키고 경로를 안내에 따라 
